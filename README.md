@@ -65,22 +65,22 @@ pip install -r requirements.txt
 If you want to evaluate a model on a specific dataset, you can specify the dataset name in the second argument, e.g., `gsm8k` or `svamp`. If you want to evaluate a model on all benchmarks, you can omit the second argument.
 ```bash 
 # evaluate one model only on one dataset or several datasets
-bash scripts/run_eval.sh your_model_path "dataset_name1,dataset_name2"
+bash scripts/run_eval.sh ${your_model_path} "dataset_name1,dataset_name2"
 # evaluate one model only on all benchmarks
-bash scripts/run_eval.sh your_model_path
+bash scripts/run_eval.sh ${your_model_path}
 # evaluate a large model on all benchmarks, such as 70B, you need to specific the TP size
-bash scripts/run_eval.sh your_model_path 2
+bash scripts/run_eval.sh ${your_model_path} 2
 ```
 
 When you would like evaluate all saved intermediate ckpts during the language model training process, you can leverage the following command:
 
 ```bash
 # only eval on one dataset or several datasets
-bash auto_dir_run.sh your_model_folder_path "dataset_name1,dataset_name2"
+bash auto_dir_run.sh ${your_model_folder_path} "dataset_name1,dataset_name2"
 # eval on all benchmarks
-bash auto_dir_run.sh your_model_folder_path
+bash auto_dir_run.sh ${your_model_folder_path}
 # eval on all bencharks, such as 70B, you need to specific the TP size
-bash auto_dir_run.sh your_model_folder_path 2
+bash auto_dir_run.sh ${your_model_folder_path} 2
 ```
 
 Note that the your_model_folder_path should be like:
