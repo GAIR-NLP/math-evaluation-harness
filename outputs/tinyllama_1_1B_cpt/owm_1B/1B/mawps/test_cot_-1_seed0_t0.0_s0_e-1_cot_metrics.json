@@ -1,0 +1,15 @@
+{
+    "num_samples": 2065,
+    "num_scores": 2065,
+    "timeout_samples": 0,
+    "empty_samples": 2,
+    "acc": 34.5,
+    "type_acc": {
+        "addsub": 41.3,
+        "multiarith": 17.0,
+        "singleeq": 35.2,
+        "singleop": 47.9
+    },
+    "time_use_in_second": 44.47417140007019,
+    "time_use_in_minite": "0:44"
+}

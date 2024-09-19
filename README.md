@@ -6,6 +6,9 @@ A unified, precise, and extensible toolkit to benchmark LLMs on various mathemat
 
 > 🌟 **In Practice**: Esteemed projects like [ToRA](https://github.com/microsoft/ToRA) (ICLR'24) and [DeepSeek-Coder](https://github.com/deepseek-ai/DeepSeek-Coder/tree/main/Evaluation/PAL-Math) have leveraged this suite!
 
+> 🙌 **Statement**: This project is a fork of [math-evaluation-harness](https://github.com/ZubinGou/math-evaluation-harness), which is no longer actively maintained by the original author. We have forked it to ensure continued updates (e.g., more features, more automation, more benchamrk) and maintenance under GAIR Lab.
+
+
 ### Features:
 
 - **Models**: Seamless compatibility with models from Hugging Face 🤗 and [vLLM](https://github.com/vllm-project/vllm).
@@ -45,7 +48,7 @@ docker run --network host --cap-add=SYS_ADMIN --privileged -d \
 ### Install
 
 ```
-git clone https://github.com/ZubinGou/math-evaluation-harness.git
+git clone https://github.com/GAIR-NLP/math-evaluation-harness.git
 cd math-evaluation-harness
 pip install -r requirements.txt
 ```
@@ -59,9 +62,44 @@ pip install -r requirements.txt
   
 2. Run the script:
 
-```bash  
-bash scripts/run_eval.sh $PROMPT_TYPE $MODEL_NAME_OR_PATH
+If you want to evaluate a model on a specific dataset, you can specify the dataset name in the second argument, e.g., `gsm8k` or `svamp`. If you want to evaluate a model on all benchmarks, you can omit the second argument.
+```bash 
+# evaluate one model only on one dataset or several datasets
+bash scripts/run_eval.sh your_model_path "dataset_name1,dataset_name2"
+# evaluate one model only on all benchmarks
+bash scripts/run_eval.sh your_model_path
+# evaluate a large model on all benchmarks, such as 70B, you need to specific the TP size
+bash scripts/run_eval.sh your_model_path 2
 ```
+
+When you would like evaluate all saved intermediate ckpts during the language model training process, you can leverage the following command:
+
+```bash
+# only eval on one dataset or several datasets
+bash auto_dir_run.sh your_model_folder_path "dataset_name1,dataset_name2"
+# eval on all benchmarks
+bash auto_dir_run.sh your_model_folder_path
+# eval on all bencharks, such as 70B, you need to specific the TP size
+bash auto_dir_run.sh your_model_folder_path 2
+```
+
+Note that the your_model_folder_path should be like:
+
+```bash 
+$ ls your_model_folder_path
+checkpoint-1000/  checkpoint-2000/  checkpoint-3000/  checkpoint-4000/  checkpoint-5000/  checkpoint-6000/  checkpoint-7000/  checkpoint-8000/  checkpoint-9000/
+```
+
+3. Summarize the results automatically
+
+```bash
+# summarize all results of all intermediate ckpts in your_model_folder_path
+python gather_results.py --do_all_ckpts --dir_path outputs/${your_model_folder_path}
+# summarize results of one ckpt
+python gather_results.py --do_one_ckpt --dir_path outputs/${your_model_folder_path}
+```
+
+This command will generate summary results and plot the results automatically in the your model folder. We provide some examples of the results in the `outputs` folder.
 
 
 ## 📊 Results
